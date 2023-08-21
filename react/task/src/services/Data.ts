@@ -20,11 +20,11 @@ export default class Data {
       });
   }
   /**
-   * Modifie la valeur de la propriété "done" via l'appel de l'api de json-server 
+   * Modifie la valeur de la propriété "done" via l'appel de l'api de json-server
    * en utilisant  le verbe "PATCH"
    * @returns Promise<any>
    */
-  static async ValidateTasks(task_id: number, done:boolean): Promise<any> {
+  static async ValidateTasks(task_id: number, done: boolean): Promise<any> {
     // Pour rappel, fetch renvoie une promesse
     return fetch(this.url + "/" + task_id, {
       headers: {
@@ -42,6 +42,26 @@ export default class Data {
       })
       .catch((error) => {
         console.error("Erreur attrapée dans loadTasks", error);
+      });
+  }
+
+  static async DeleteTasks(task_id: number): Promise<any> {
+    // Pour rappel, fetch renvoie une promesse
+    return fetch(this.url + "/" + task_id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((tasks) => {
+        return tasks;
+      })
+      .catch((error) => {
+        console.error(error);
       });
   }
 }

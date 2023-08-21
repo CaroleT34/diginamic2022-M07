@@ -3,14 +3,8 @@
     {
       "id": 1,
       "description": "Faire la vaisselle",
-      "done": true,
+      "done": false,
       "order": 1
-    },
-    {
-      "id": 2,
-      "description": "Faire du sport",
-      "done": true,
-      "order": 2
     }
   ]
 }
