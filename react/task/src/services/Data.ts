@@ -45,6 +45,27 @@ export default class Data {
       });
   }
 
+  static async addTask(initial_value = 0, description = "", order = null) {
+    // Pour rappel la fonction fetch retourne une promesse
+    return fetch(this.url,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify
+        ({ 
+          "id": initial_value, 
+          "description": description,
+          "done": false,
+          "order" :  order
+        })
+      })
+      .then((res) => { console.log(res) })
+      .catch((error) => { console.error(error) })
+  }
+
   static async DeleteTasks(task_id: number): Promise<any> {
     // Pour rappel, fetch renvoie une promesse
     return fetch(this.url + "/" + task_id, {

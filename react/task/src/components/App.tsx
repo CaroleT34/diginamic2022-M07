@@ -4,6 +4,7 @@ import Task from "./Task";
 import { useState, useEffect } from "react";
 import TaskInterface from "../Interface/TaskInterface";
 import Data from "../services/Data";
+import FormAdd from './FormAdd';
 
 function App() {
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
@@ -18,7 +19,7 @@ function App() {
     event: React.MouseEvent<HTMLButtonElement>,
     task_id: number
   ): void => {
-    console.log(`Dans handleClickValidate`, task_id);
+    // console.log(`Dans handleClickValidate`, task_id);
 
     const copy_tasks = tasks.map((task) => {
       if (task_id === task.id) {
@@ -32,7 +33,7 @@ function App() {
   const handleClickDelete = (
     task_id: number
   ): void => {
-    console.log(`Dans handleClickDelete`, task_id);
+    // console.log(`Dans handleClickDelete`, task_id);
 
     const copy_tasks = tasks.map((task) => {
       if (task_id === task.id) {
@@ -44,6 +45,13 @@ function App() {
     });
     setTasks(copy_tasks);
   };
+  const handleSubmitAdd = async (event, task_id) => {
+    event.preventDefault();
+    console.log(`Dans handleSubmitAdd`);
+    await Data.addTask(task_id);
+    const loaded_counters = await Data.loadTasks();
+    setTasks(loaded_counters);
+  }
 
   const sorted_tasks = [...tasks].sort((a, b) => {
     if (a.done === b.done) return -1;
@@ -52,6 +60,9 @@ function App() {
   return (
     <div className="App container">
       <h1>Liste des tâches</h1>
+      <FormAdd
+        onAdd={handleSubmitAdd}
+      />
       {sorted_tasks.map((task) => (
         <Task
           key={task.id}
